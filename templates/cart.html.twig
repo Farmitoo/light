@@ -1,5 +1,34 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ order.total/100 }}€
+    <div class="container">
+
+    <div class="row-cols-1">
+        <h1>Mon Panier</h1>
+        <div class="cart">
+            <ul class="cart-list">
+                {% for item in order.items %}
+                    <li class="cart-list-item">
+                        <p class="cart-item-title">{{ item.product.title }}</p>
+                        <p class="cart-item-quantity">{{ item.quantity }}</p>
+                        <p class="cart-item-price">{{ (item.product.price / 100) | number_format(2) }}€</p>
+                        <p class="cart-item-total">{{ (item.quantity * item.product.price / 100) | number_format(2) }}€</p>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="cart-resume">
+                <p>Prix total avec TVA<br>  <strong class="cart-total">{{ (order.total/ 100) | number_format(2) }}€</strong></p>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary">Passer commande</button>
+                </div>
+                <p class="cart-resume-small">Coût de la TVA {{ (order.vatPrice / 100) | number_format(2)}}€<br>
+                    Coût de la livraison {{ (order.shippingFees / 100) | number_format(2)}}€</p>
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+
 {% endblock %}

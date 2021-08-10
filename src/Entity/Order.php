@@ -7,7 +7,7 @@ namespace App\Entity;
 class Order
 {
     /**
-     * @var array
+     * @var array|Item[]
      */
     protected array $items;
 
@@ -37,6 +37,7 @@ class Order
     public function addItem(Item $item): void
     {
         $this->items[] = $item;
+        $this->price += $item->getProduct()->getPrice() * $item->getQuantity();
     }
 
     /**
@@ -55,6 +56,23 @@ class Order
         }
 
         return $byBrands;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Brand|null
+     */
+    public function getBrandByName(string $name): ?Brand
+    {
+        foreach ($this->items as $item) {
+            $brand = $item->getProduct()->getBrand();
+            if ($brand->getName() === $name) {
+                return $brand;
+            }
+        }
+
+        return null;
     }
 
     /**

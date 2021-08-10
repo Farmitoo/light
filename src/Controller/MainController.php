@@ -36,7 +36,7 @@ class MainController extends AbstractController
         ---------------------------------------------
         $promotion1 = new Promotion(); // réduction de 12€, applicable du 01 au 10 aout 2021 pour une commande de 200€ minimum
         $promotion2 = new Promotion(); // réduction de 5€, applicable dès 5 produits achetés sur le site.
-        -- à mettre où vous voulez dans le projet  -- 
+        -- à mettre où vous voulez dans le projet  --
         */
 
         $orderUpdater->addProduct($order, $product1, 10);

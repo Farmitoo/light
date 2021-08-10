@@ -37,29 +37,23 @@ class OrderUpdaterTest extends TestCase
         $order->addItem($item1);
         $order->addItem($item2);
 
-        $this->vatCalculator->expects($this->once())
-            ->method('calculate')
-            ->with($order)
-            ->willReturn(21100);
-
-        $this->shippingCalculator->expects($this->once())
-        ->method('calculate')
-        ->with($order)
-        ->willReturn(1600);
-
         $this->orderUpdater->addProduct($order, $product3, 1);
 
         $this->assertCount(3, $order->getItems());
         $this->assertSame(111000, $order->getPrice());
 //        $this->assertEquals(1000, $order->getPromotionReduction());
+        //Shipping
+        //Farmitoo + 12
+        //Gallagher + 14 ou + 28
+        //Donc soit 2600 ou 4000 a moins que l'on ne prenne que le Shipping le plus chère ?
         $this->assertSame(1600, $order->getShippingFees());
         $this->assertSame(21100, $order->getVatPrice());
     }
 
     protected function setUp(): void
     {
-        $this->shippingCalculator = $this->getMockBuilder(ShippingCalculator::class)->disableOriginalConstructor()->getMock();
-        $this->vatCalculator = $this->getMockBuilder(VatCalculator::class)->getMock();
+        $this->shippingCalculator = new ShippingCalculator();
+        $this->vatCalculator = new VatCalculator();
 
         $this->orderUpdater = new OrderUpdater($this->shippingCalculator, $this->vatCalculator);
     }
