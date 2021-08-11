@@ -11,14 +11,18 @@
                     <li class="cart-list-item">
                         <p class="cart-item-title">{{ item.product.title }}</p>
                         <p class="cart-item-quantity">{{ item.quantity }}</p>
-                        <p class="cart-item-price">{{ (item.product.price / 100) | number_format(2) }}€</p>
                         <p class="cart-item-total">{{ (item.quantity * item.product.price / 100) | number_format(2) }}€</p>
                     </li>
                 {% endfor %}
             </ul>
 
             <div class="cart-resume">
-                <p>Prix total avec TVA<br>  <strong class="cart-total">{{ (order.total/ 100) | number_format(2) }}€</strong></p>
+                {% if order.promotionReduction > 0 %}
+                    <p class="cart-promotion">Réduction promotionnelle
+                        <span class="cart-promotion-amount">{{ (order.promotionReduction / 100) | number_format(2) }}€</span>
+                    </p>
+                {% endif %}
+                <p>Prix TTC<br>  <strong class="cart-total">{{ (order.total/ 100) | number_format(2) }}€</strong></p>
                 <div class="d-grid gap-2">
                     <button class="btn btn-primary">Passer commande</button>
                 </div>

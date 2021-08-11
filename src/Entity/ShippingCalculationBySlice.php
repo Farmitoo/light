@@ -34,18 +34,20 @@ class ShippingCalculationBySlice extends AbstractShippingCalculation
         $quantities = $this->countQuantities($items);
         $slices = $this->getCountItemBySlice();
         $shippingFeesBrand = $this->getShippingFees();
-        return intval((round($quantities / $slices)) * $shippingFeesBrand);
+
+        return (int) ((round($quantities / $slices)) * $shippingFeesBrand);
     }
 
     /**
      * @param array|Item[] $items
+     *
      * @return int
      */
     private function countQuantities(array $items): int
     {
         $count = 0;
 
-        foreach($items as $item) {
+        foreach ($items as $item) {
             $count += $item->getQuantity();
         }
 

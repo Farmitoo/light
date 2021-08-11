@@ -32,6 +32,11 @@ class Order
     protected int $shippingFees = 0;
 
     /**
+     * @var array|Promotion[]
+     */
+    protected array $promotions = [];
+
+    /**
      * @param Item $item
      */
     public function addItem(Item $item): void
@@ -46,6 +51,17 @@ class Order
     public function getItems(): array
     {
         return $this->items;
+    }
+
+    public function getItemsQuantities(): int
+    {
+        $quantities = 0;
+
+        foreach ($this->getItems() as $item) {
+            $quantities += $item->getQuantity();
+        }
+
+        return $quantities;
     }
 
     public function getItemsByBrands(): array
@@ -153,5 +169,15 @@ class Order
     public function setShippingFees(int $shippingFees): void
     {
         $this->shippingFees = $shippingFees;
+    }
+
+    public function addPromotion(Promotion $promotion): void
+    {
+        $this->promotions[] = $promotion;
+    }
+
+    public function getPromotions(): array
+    {
+        return $this->promotions;
     }
 }
