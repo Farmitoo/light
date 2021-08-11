@@ -9,9 +9,12 @@
             <ul class="cart-list">
                 {% for item in order.items %}
                     <li class="cart-list-item">
-                        <p class="cart-item-title">{{ item.product.title }}</p>
-                        <p class="cart-item-quantity">{{ item.quantity }}</p>
-                        <p class="cart-item-total">{{ (item.quantity * item.product.price / 100) | number_format(2) }}€</p>
+                        <span class="cart-item-title">{{ item.product.title }}</span>
+                        <div>
+                            <span class="cart-item-total">{{ (item.quantity * item.product.price / 100) | number_format(2) }}€</span>
+                            <br>
+                            <span class="cart-item-quantity">{{ (item.product.price / 100) | number_format(2) }}€ x{{ item.quantity }}</span>
+                        </div>
                     </li>
                 {% endfor %}
             </ul>

@@ -1,5 +1,15 @@
+@import '~bootstrap/scss/bootstrap';
 @import "cart-list";
 
 body {
-    background-color: lightgray;
+    background-color: #efefef;
+}
+
+.footer {
+    background: #FFF;
+    padding-top: 2rem;
+}
+
+.navbar {
+    margin-bottom: 3rem;
 }
