@@ -10,4 +10,6 @@ interface ShippingCalculationInterface
      * @return int
      */
     public function getShippingFees(): int;
+
+    public function calculateFees(Order $order, array $items): int;
 }

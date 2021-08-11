@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace App\Calculator;
 
 use App\Entity\Order;
-use App\Entity\ShippingCalculationByOrder;
-use App\Entity\ShippingCalculationBySlice;
+use App\Entity\ShippingCalculationInterface;
 
 class ShippingCalculator
 {
@@ -28,14 +27,11 @@ class ShippingCalculator
             if (null === $brand) {
                 throw new \Exception("The Brand $brandName does not have any ShippingCalculation. Please add one");
             }
-
-            if ($brand->getShippingCalculation() instanceof ShippingCalculationByOrder) {
-                $shippingFees += $brand->getShippingCalculation()->getShippingFees();
-            } elseif ($brand->getShippingCalculation() instanceof ShippingCalculationBySlice) {
-                $shippingFees += (floor(\count($items) / $brand->getShippingCalculation()->getCountItemBySlice())) * $brand->getShippingCalculation()->getShippingFees();
+            if ($brand->getShippingCalculation() instanceof ShippingCalculationInterface) {
+                $shippingFees += $brand->getShippingCalculation()->calculateFees($order, $items);
             }
         }
 
-        return (int) $shippingFees;
+        return $shippingFees;
     }
 }
