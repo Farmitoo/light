@@ -46,7 +46,7 @@ class OrderUpdaterTest extends TestCase
         //Farmitoo + 12
         //Gallagher + 14 ou + 28
         //Donc soit 2600 ou 4000 a moins que l'on ne prenne que le Shipping le plus chère ?
-        $this->assertSame(1600, $order->getShippingFees());
+        $this->assertSame(4000, $order->getShippingFees());
         $this->assertSame(21100, $order->getVatPrice());
     }
 
