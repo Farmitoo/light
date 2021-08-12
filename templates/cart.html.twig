@@ -10,6 +10,7 @@
                 {% for item in order.items %}
                     <li class="cart-list-item">
                         <span class="cart-item-title">{{ item.product.title }}</span>
+                        <span class="cart-item-quantities">{{ item.quantity }} unités</span>
                         <div>
                             <span class="cart-item-total">{{ (item.quantity * item.product.price / 100) | number_format(2) }}€</span>
                             <br>
@@ -20,17 +21,20 @@
             </ul>
 
             <div class="cart-resume">
+                <p class="cart-resume-price cart-resume-item">
+                    Coût HT <span class="cart-total-amount">{{ (order.price / 100) | number_format(2) }}€</span>
+                </p>
                 {% if order.promotionReduction > 0 %}
-                    <p class="cart-promotion">Réduction promotionnelle
+                    <p class="cart-promotion cart-resume-item">Remise
                         <span class="cart-promotion-amount">{{ (order.promotionReduction / 100) | number_format(2) }}€</span>
                     </p>
                 {% endif %}
-                <p>Prix TTC<br>  <strong class="cart-total">{{ (order.total/ 100) | number_format(2) }}€</strong></p>
+                <p class="cart-resume-vat cart-resume-item">TVA <span>{{ (order.vatPrice / 100) | number_format(2)}}€</span></p>
+                <p class="cart-resume-shipping cart-resume-item">Livraison  <span>{{ (order.shippingFees / 100) | number_format(2)}}€</span></p>
+                <p class="cart-resume-total">Prix TTC<br>  <strong class="cart-total">{{ (order.total/ 100) | number_format(2) }}€</strong></p>
                 <div class="d-grid gap-2">
                     <button class="btn btn-primary">Passer commande</button>
                 </div>
-                <p class="cart-resume-small">Coût de la TVA {{ (order.vatPrice / 100) | number_format(2)}}€<br>
-                    Coût de la livraison {{ (order.shippingFees / 100) | number_format(2)}}€</p>
             </div>
 
         </div>

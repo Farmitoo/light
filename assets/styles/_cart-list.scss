@@ -21,7 +21,7 @@
   padding: 12px;
   list-style: none;
   display: grid;
-  grid-template-columns: 80% 20%;
+  grid-template-columns: 60% 20% 20%;
   justify-content: space-between;
   border-radius: 12px;
   min-height: 7rem;
@@ -63,10 +63,16 @@
   color: #016701;
   font-weight: bold;
 }
-.cart-resume-small {
-  font-size: 12px;
-  margin-top: 8px;
+
+.cart-resume-item {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 0;
+  font-size: 14px;
+}
+
+.cart-resume-total {
+  margin-top: 2rem;
 }
 
 @include media-breakpoint-down('sm') {
