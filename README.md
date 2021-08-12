@@ -42,6 +42,44 @@ Prenez ce projet comme si c'était le **votre** projet: si une évolution du cod
 
 N'hésitez pas à ajouter des commentaires dans le README pour expliquer ces choix
 
+## Gestion de la promotion
+
+Pour ajouter une promotion à une commande, il existe le PromotionBuilder. 
+Cette classe a un rôle simple, créer une promotion orienté POO, un peu comme le QueryBuilder de Doctrine,
+on spécifie nos conditions et montant de la réduction liés a la promotion. 
+Ce PromotionBuilder retourne ensuite une entité Promotion avec les conditions.
+
+```php
+ $promotion1 = (new PromotionBuilder())
+            ->setDuration($startPromotion, $endPromotion)
+            ->setMinimumPrice(20000)
+            ->setDiscount(1200)
+            ->buildPromotion();
+```
+
+Il faut par la suite passer par le OrderUpdater
+
+```php
+$orderUpdater->addPromotion($order, $promotion1);
+```
+
+### Les conditions de la promotion
+
+Une promotion est applicable uniquement en fonction de certaines conditions. 
+Par exemple la date de la commande, la quantité de produit de la commande ou le montant de la commande. 
+Afin d'être assez souple sur la gestion des Condition d'une promotion, l'interface PromotionConditionInterface permet de
+gérer simplement si la condition est valide pour la promotion. 
+
+On peut donc créer facilement une nouvelle condition de promotion en implémentant l'interface directement, il faudra par la suite
+l'ajouter dans le PromotionBuilder pour y accéder directement depuis le builder.
+
+Si une condition a besoin d'accéder a la commande en cours, on peut lui ajouter l'interface PromotionConditionOrderInterface 
+avec le trait PromotionOrderTrait.
+
+### Calcul de la promotion
+
+La classe PromotionCalculator permet de définir la Promotion qui est applicable ou non. Dès qu'une promotion est applicable,
+les autres sont ignorées.
 
 # Annexe
 
