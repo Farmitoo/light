@@ -28,4 +28,29 @@ class ShippingCalculationBySlice extends AbstractShippingCalculation
     {
         return $this->countItemBySlice;
     }
+
+    public function calculateFees(Order $order, array $items): int
+    {
+        $quantities = $this->countQuantities($items);
+        $slices = $this->getCountItemBySlice();
+        $shippingFeesBrand = $this->getShippingFees();
+
+        return (int) ((round($quantities / $slices)) * $shippingFeesBrand);
+    }
+
+    /**
+     * @param array|Item[] $items
+     *
+     * @return int
+     */
+    private function countQuantities(array $items): int
+    {
+        $count = 0;
+
+        foreach ($items as $item) {
+            $count += $item->getQuantity();
+        }
+
+        return $count;
+    }
 }

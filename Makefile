@@ -6,3 +6,9 @@ test:
 
 fixer:
 	./vendor/bin/php-cs-fixer fix --allow-risky=yes
+
+assets-watch:
+	yarn run watch
+
+assets-build:
+	yarn run build

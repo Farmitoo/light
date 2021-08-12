@@ -1,5 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ order.total/100 }}€
+    <div class="container">
+
+    <div class="row-cols-1">
+        <h1>Mon Panier</h1>
+        <div class="cart">
+            <ul class="cart-list">
+                {% for item in order.items %}
+                    <li class="cart-list-item">
+                        <span class="cart-item-title">{{ item.product.title }}</span>
+                        <span class="cart-item-quantities">{{ item.quantity }} unités</span>
+                        <div>
+                            <span class="cart-item-total">{{ (item.quantity * item.product.price / 100) | number_format(2) }}€</span>
+                            <br>
+                            <span class="cart-item-quantity">{{ (item.product.price / 100) | number_format(2) }}€ x{{ item.quantity }}</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="cart-resume">
+                <p class="cart-resume-price cart-resume-item">
+                    Coût HT <span class="cart-total-amount">{{ (order.price / 100) | number_format(2) }}€</span>
+                </p>
+                {% if order.promotionReduction > 0 %}
+                    <p class="cart-promotion cart-resume-item">Remise
+                        <span class="cart-promotion-amount">{{ (order.promotionReduction / 100) | number_format(2) }}€</span>
+                    </p>
+                {% endif %}
+                <p class="cart-resume-vat cart-resume-item">TVA <span>{{ (order.vatPrice / 100) | number_format(2)}}€</span></p>
+                <p class="cart-resume-shipping cart-resume-item">Livraison  <span>{{ (order.shippingFees / 100) | number_format(2)}}€</span></p>
+                <p class="cart-resume-total">Prix TTC<br>  <strong class="cart-total">{{ (order.total/ 100) | number_format(2) }}€</strong></p>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary">Passer commande</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+
 {% endblock %}
